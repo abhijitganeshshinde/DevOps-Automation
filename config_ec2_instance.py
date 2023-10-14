@@ -17,17 +17,20 @@ ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 current_directory = os.getcwd()
 private_key_file_name = 'boto3_G4.pem'
 
+script_path =   os.path.join(current_directory,'backend_script.sh')
+
 # Connect to the EC2 instance
 private_key_path = os.path.join(current_directory, private_key_file_name)
 ssh_client.connect(public_ip, username='ubuntu', key_filename=private_key_path)
 
 # Run commands on the EC2 instance
 commands = [
+    f'sudo bash {script_path}'
    # 'sudo apt-get update',
     #'sudo apt-get remove nodejs',
     #'curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -',
-    'sudo apt-get update',
-    'sudo apt-get install -y nodejs',
+    # 'sudo apt-get update',
+    # 'sudo apt-get install -y nodejs',
 #     'sudo apt-get install -y npm',
 #     'sudo apt-get install -y nginx',
 #     'git clone https://github.com/abhijitganeshshinde/TravelMemory.git',
