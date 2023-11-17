@@ -1,22 +1,18 @@
 import boto3
+import json
 
-# Create a Boto3 EC2 resource
-ec2 = boto3.resource('ec2')
+# Load JSON data from a file
+with open('ec2_instances.json') as json_file:
+    instances_data = json.load(json_file)
 
-# Replace 'your-instance-id' with the ID of the instance you want to stop/start
-instance_id = 'i-0e42e0da8733f0c06'
+# Initialize a Boto3 EC2 client
+ec2 = boto3.client('ec2')
 
-# Get the current state of the EC2 instance
-instance = ec2.Instance(instance_id)
-
-# Print the instance state before stopping
-print(f"Instance ID: {instance_id}")
-print(f"Instance State before stopping: {instance.state['Name']}")
-
-# Stop the EC2 instance
-ec2.instances.filter(InstanceIds=[instance_id]).stop()
-
-# Print the instance state after stopping
-instance.load()  # Reload the instance information
-print(f"Instance State after stopping: {instance.state['Name']}")
-
+# Stop each EC2 instance
+for instance_info in instances_data:
+    instance_id = instance_info['InstanceId']
+    
+    # Stop the instance
+    ec2.stop_instances(InstanceIds=[instance_id])
+    
+    print(f"Stopped EC2 instance with ID: {instance_id}")
