@@ -1,6 +1,6 @@
 # DevOps-Automation
 
-# Web Application Deployment and Infrastructure Management
+# Web Application Monitoring, Scaling and Automation
 
 ## Overview
 
